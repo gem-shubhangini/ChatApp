@@ -1,51 +1,20 @@
-import {Keyboard, KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
-import React, {useContext, useEffect, useState} from 'react';
-import {
-  Pusher,
-  PusherMember,
-  PusherChannel,
-  PusherEvent,
-} from '@pusher/pusher-websocket-react-native';
+import {Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+
 import AppContext from '../appcontext';
 import {TextInput} from 'react-native-gesture-handler';
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import { SafeAreaView } from 'react-native-safe-area-context';
-import axios from '../api/axios'
-const pusher = Pusher.getInstance();
 
-const ChatScreen = ({navigation}) => {
+
+
+
+const ChatScreen = ({navigation,route}) => {
     const[messageText,setMessageText]=useState("");
-    const [messages,setMessages]=useState([])
+    const {messages}=route.params;
+    const scrollRef = useRef()
   const {props, setProps} = useContext(AppContext);
-  const ChatPusher = async () => {
-    
-    await pusher.init({
-      apiKey: '436e4833f50eb1ea41c2',
-      cluster: 'ap2',
-    });
-    await pusher.connect();
-    await pusher.subscribe({
-      channelName: 'messages',
-      onEvent: event => {
-        console.log(`Event received: ${event.data}`);
-      },
-    });
-  };
-
-  useEffect(()=>{
-    //used to get data from input text
-     ChatPusher()
-  },[])
- 
-  useEffect(()=>{
-       axios.get('/messages/sync')
-       .then(response=>{
-        console.log(response.data)
-        setMessages(response.data)
-       })
-  },[])
-
-  console.log("messages",messages)
+  
 
   return (
     <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' : ''} style={styles.container}>
@@ -53,7 +22,18 @@ const ChatScreen = ({navigation}) => {
     <SafeAreaView style={styles.container}>
     
       <View style={styles.chatMessage}>
-            
+        <ScrollView  ref={scrollRef} onContentSizeChange={()=>scrollRef.current.scrollToEnd()}>
+            {
+                messages.map((item,index)=><View  key={index}>
+                    <Text>{item.name}</Text>
+                    <View style={styles.chatRecievd}>
+                    <Text>{item.message}</Text>
+                    <Text>{item.timestamp}</Text>
+                    </View>
+                </View>
+                )
+            }
+        </ScrollView>
       </View>
      
       <View style={styles.chatFormContainer}>
@@ -120,6 +100,15 @@ const styles = StyleSheet.create({
     },
     chatMessage:{
       flex:1
+    },
+    chatRecievd:{
+       minWidth:100,
+       maxWidth:300,
+       height:50,
+       marginVertical:5,
+       backgroundColor:"#efefef",
+       borderRadius:15,
+       padding:5
     }
    
 });
