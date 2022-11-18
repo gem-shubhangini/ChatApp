@@ -5,56 +5,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-import {
-  Pusher,
-  PusherMember,
-  PusherChannel,
-  PusherEvent,
-} from '@pusher/pusher-websocket-react-native';
 
-import axios from '../api/axios'
-const pusher = Pusher.getInstance();
+
+
 const ProfileScreen = ({navigation}) => {
   const {props, setProps} = useContext(AppContext);
-  const [messages,setMessages]=useState([])
-  const ChatPusher =  async() => {
-   
-   
-      await pusher.init({
-       apiKey: '436e4833f50eb1ea41c2',
-       cluster: 'ap2',
-     });
-      await pusher.connect();
-      await pusher.subscribe({
-       channelName: 'messages',
-       onEvent: event => {
-         console.log(`Event received: ${event.data}`);
-         setMessages([...messages,event.data]);
-         
-       },
-     });
-
-    
-    
-  };
-
-  useEffect(()=>{
-    //used to get data from input text
-     ChatPusher();
-     console.log("h1 messahge : ",messages)
-     return () => {
-      pusher.unsubscribe({channelName: 'messages'});
-    };
-  },[messages])
- 
-  useEffect(()=>{
-       axios.get('/messages/sync')
-       .then(response=>{
-        console.log(response.data)
-        setMessages(response.data)
-       })
-  },[])
-
 
 
   return (
@@ -72,9 +27,11 @@ const ProfileScreen = ({navigation}) => {
         <TouchableOpacity style={styles.icon}>
           <Ionicons name="call" size={30} color="white"></Ionicons>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.icon} onPress={()=>{navigation.navigate("Chat",{
-          messages:messages
-        })}}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => {
+            navigation.navigate('Chat');
+          }}>
           <Entypo name="chat" size={30} color="white" />
         </TouchableOpacity>
       </View>
