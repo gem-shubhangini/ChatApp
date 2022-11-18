@@ -46,7 +46,7 @@ const ChatPush = ()=>{
   useEffect(() => {
     ChatPush();
     return () => {
-      pusher.unsubscribe({channelName: 'presence-gamestart'});
+      pusher.unsubscribe({channelName: 'messages'});
     };
   }, [messages]);
  
