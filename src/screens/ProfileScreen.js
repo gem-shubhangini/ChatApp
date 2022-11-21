@@ -8,7 +8,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {
   Pusher,
   PusherMember,
-  PusherChannel,
+  PusherChannel ,
   PusherEvent,
 } from '@pusher/pusher-websocket-react-native';
 
@@ -43,7 +43,7 @@ const ProfileScreen = ({navigation}) => {
      ChatPusher();
      console.log("h1 messahge : ",messages)
      return () => {
-      pusher.unsubscribe({channelName: 'messages'});
+      pusher.unsubscribe  ({channelName: 'messages'});
     };
   },[messages])
  
@@ -68,7 +68,7 @@ const ProfileScreen = ({navigation}) => {
           <Text style={styles.profileDetail}>{props.calledemailId}</Text>
         </View>
       </View>
-      <View style={styles.opreation}>
+      <View style={styles.opreation}> 
         <TouchableOpacity style={styles.icon}>
           <Ionicons name="call" size={30} color="white"></Ionicons>
         </TouchableOpacity>
