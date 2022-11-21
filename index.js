@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import Messages from "./dbMessages.js";
 import Pusher from "pusher";
+import Users from './userdb.js'
 const app = express();
 const port = process.env.PORT || 9000;
 const connection_url = "mongodb+srv://admin1:Riya@cluster1.wgqe1yy.mongodb.net/?retryWrites=true&w=majority";
@@ -65,5 +66,31 @@ app.post("/messages/new", (req, res) => {
     }
   });
 });
+
+
+
+app.post("/user/create",(req,res)=>{
+     const dbuser=req.body;
+     Users.create(dbuser,(err,data)=>{
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(201).send(data);
+      }
+     });
+})
+
+
+app.get("/user/sync",(req,res)=>{
+       Users.find((err, data) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.status(200).send(data);
+        }
+      });
+})
+
+
 
 app.listen(port, () => console.log("listening on port : ", port));
