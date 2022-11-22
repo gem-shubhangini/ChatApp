@@ -90,10 +90,10 @@ const ChatScreen = ({navigation}) => {
                   item.userEmail === props.calledemailId
                 ) {
                   return (
-                    <View key={index} style={{flexDirection:"row-reverse",display:"flex"}}>
+                    <View key={index} style={{alignSelf:"flex-end",flexDirection:"row"}}>
                      
-                      <View style={{...styles.chatRecievd,backgroundColor:"blue",flexWrap:"wrap"}}>
-                        <Text style={{color:"white",fontSize:18}}>{item.message}</Text>
+                      <View style={{...styles.chatRecievd,backgroundColor:"blue"}}>
+                        <Text style={{color:"white",fontSize:18,flexWrap:"wrap"}}>{item.message}</Text>
                         <Text style={{color:"white"}}>{item.timestamp}</Text>
                       </View>
                     </View>
@@ -106,7 +106,7 @@ const ChatScreen = ({navigation}) => {
                     <View key={index}>
                      
                       <View style={{...styles.chatRecievd, backgroundColor: '#efefef',flexWrap:"wrap"}}>
-                        <Text style={{color:"black",fontSize:18}}>{item.message}</Text>
+                        <Text style={{color:"black",fontSize:18,flexWrap:"wrap"}}>{item.message}</Text>
                         <Text style={{color:"black"}}>{item.timestamp}</Text>
                       </View>
                     </View>
