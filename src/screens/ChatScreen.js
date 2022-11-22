@@ -90,10 +90,10 @@ const ChatScreen = ({navigation}) => {
                 ) {
                   return (
                     <View key={index}>
-                      <Text>{item.name}</Text>
-                      <View style={styles.chatRecievd}>
-                        <Text>{item.message}</Text>
-                        <Text>{item.timestamp}</Text>
+                     
+                      <View style={{...styles.chatRecievd,backgroundColor:"blue"}}>
+                        <Text style={{color:"white"}}>{item.message}</Text>
+                        <Text style={{color:"white"}}>{item.timestamp}</Text>
                       </View>
                     </View>
                   );
@@ -103,10 +103,10 @@ const ChatScreen = ({navigation}) => {
                 ) {
                   return (
                     <View key={index}>
-                      <Text>{item.name}</Text>
-                      <View style={styles.chatRecievd}>
-                        <Text>{item.message}</Text>
-                        <Text>{item.timestamp}</Text>
+                     
+                      <View style={{...styles.chatRecievd, backgroundColor: '#efefef'}}>
+                        <Text style={{color:"black"}}>{item.message}</Text>
+                        <Text style={{color:"black"}}>{item.timestamp}</Text>
                       </View>
                     </View>
                   );
