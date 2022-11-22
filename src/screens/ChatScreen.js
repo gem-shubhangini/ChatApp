@@ -92,8 +92,8 @@ const ChatScreen = ({navigation}) => {
                   return (
                     <View key={index} style={{flexDirection:"row-reverse",display:"flex"}}>
                      
-                      <View style={{...styles.chatRecievd,backgroundColor:"blue"}}>
-                        <Text style={{color:"white"}}>{item.message}</Text>
+                      <View style={{...styles.chatRecievd,backgroundColor:"blue",flexWrap:"wrap"}}>
+                        <Text style={{color:"white",fontSize:18}}>{item.message}</Text>
                         <Text style={{color:"white"}}>{item.timestamp}</Text>
                       </View>
                     </View>
@@ -105,8 +105,8 @@ const ChatScreen = ({navigation}) => {
                   return (
                     <View key={index}>
                      
-                      <View style={{...styles.chatRecievd, backgroundColor: '#efefef'}}>
-                        <Text style={{color:"black"}}>{item.message}</Text>
+                      <View style={{...styles.chatRecievd, backgroundColor: '#efefef',flexWrap:"wrap"}}>
+                        <Text style={{color:"black",fontSize:18}}>{item.message}</Text>
                         <Text style={{color:"black"}}>{item.timestamp}</Text>
                       </View>
                     </View>
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   chatRecievd: {
     minWidth: 100,
     maxWidth: 300,
-    height: 50,
+    height: "auto",
     marginVertical: 5,
     borderRadius: 15,
     padding: 5,
