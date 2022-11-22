@@ -193,5 +193,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#efefef',
     borderRadius: 15,
     padding: 5,
+    
+    
+
+    
   },
 });
