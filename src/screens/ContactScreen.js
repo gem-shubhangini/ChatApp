@@ -9,26 +9,10 @@ import React, {useContext, useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
 import AppContext from '../appcontext';
 
-const ContactScreen = ({navigation}) => {
+const ContactScreen = ({navigation,route}) => {
   const {props, setProps} = useContext(AppContext);
-  const articles = [
-    {
-      user: 'Riya',
-      emailId: 'Riya@gmail.com',
-    },
-    {
-      user: 'Riya',
-      emailId: 'Riya1@gmail.com',
-    },
-    {
-      user: 'Tanish',
-      emailId: 'Tanish@gmail.com',
-    },
-    {
-      user: 'abcd',
-      emailId: 'abcd@gmail.com',
-    },
-  ];
+
+  const {users}=route.params;
   const [darkTheme, setDarkTheme] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const handleSearch = text => {
@@ -37,7 +21,7 @@ const ContactScreen = ({navigation}) => {
 
       return;
     }
-    setSearchResults(articles.filter(query => query.user.includes(text)));
+    setSearchResults(users.filter(query => query.name.includes(text) && query.name!=props.user &&query.email!=props.emailId  ));
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -57,8 +41,8 @@ const ContactScreen = ({navigation}) => {
               onPress={() => {
                 setProps({
                   ...props,
-                  calleduser: n.user,
-                  calledemailId: n.emailId,
+                  calleduser: n.name,
+                  calledemailId: n.email,
                 });
                 navigation.navigate('Profile');
                 setSearchResults([]);
@@ -69,7 +53,7 @@ const ContactScreen = ({navigation}) => {
 
                   color: 'white',
                 }}>
-                {n.user}
+                {n.name}
               </Text>
               <Text
                 style={{
@@ -77,7 +61,7 @@ const ContactScreen = ({navigation}) => {
 
                   color: 'white',
                 }}>
-                {n.emailId}
+                {n.email}
               </Text>
             </TouchableOpacity>
           ))}
