@@ -14,7 +14,7 @@ import AppContext from '../appcontext';
 import {TextInput} from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
+import moment from 'moment';
 import {Pusher} from '@pusher/pusher-websocket-react-native';
 import axios from '../api/axios';
 
@@ -27,12 +27,12 @@ const ChatScreen = ({navigation}) => {
   const pusher = Pusher.getInstance();
 
   const sendMessage = async () => {
-
+    let a = new Date();
     await axios.post('/messages/new', {
       message: messageText,
       name: props.user,
       email: props.emailId,
-      timestamp: new Date().toTimeString(),
+      timestamp: moment(new Date()).format('hh:mm'),
       user: props.calleduser,
       userEmail: props.calledemailId,
     });
