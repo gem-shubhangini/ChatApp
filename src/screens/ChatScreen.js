@@ -32,7 +32,7 @@ const ChatScreen = ({navigation}) => {
       message: messageText,
       name: props.user,
       email: props.emailId,
-      timestamp: 'Just Now ',
+      timestamp: new Date().toTimeString(),
       user: props.calleduser,
       userEmail: props.calledemailId,
     });
@@ -90,7 +90,7 @@ const ChatScreen = ({navigation}) => {
                   item.userEmail === props.calledemailId
                 ) {
                   return (
-                    <View key={index} style={{flexDirection:"row-reverse"}}>
+                    <View key={index} style={{flexDirection:"row-reverse",display:"flex"}}>
                      
                       <View style={{...styles.chatRecievd,backgroundColor:"blue"}}>
                         <Text style={{color:"white"}}>{item.message}</Text>
