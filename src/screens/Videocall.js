@@ -1,10 +1,11 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Foundation from 'react-native-vector-icons/Foundation'
+
 import AppContext from '../appcontext';
 const Videocall = ({navigation}) => {
-
+    const [audio,setAudio]=useState(true);
+    const [video,setVideo]=useState(true);
     const {props, setProps} = useContext(AppContext);
 
 
@@ -20,11 +21,11 @@ const Videocall = ({navigation}) => {
               <TouchableOpacity style={{...styles.button,backgroundColor:"red"}} onPress={()=>navigation.goBack()}>
               <MaterialCommunityIcons name='phone-hangup' size={30} color="white" />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button}>
-              <MaterialCommunityIcons name='microphone' size={30} />
+              <TouchableOpacity style={styles.button} onPress={()=>setAudio(!audio)}>
+              <MaterialCommunityIcons name={audio?'microphone':'microphone-off'} size={30} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button}>
-              <Foundation name='video' size={30} />
+              <TouchableOpacity style={styles.button} onPress={()=>setVideo(!video)}>
+              <MaterialCommunityIcons name={video?'video':'video-off'} size={30} />
               </TouchableOpacity>
             </View>
          </View>
