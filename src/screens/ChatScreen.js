@@ -27,7 +27,6 @@ const ChatScreen = ({navigation}) => {
   const pusher = Pusher.getInstance();
 
   const sendMessage = async () => {
-    console.log('its working');
 
     await axios.post('/messages/new', {
       message: messageText,
@@ -36,10 +35,6 @@ const ChatScreen = ({navigation}) => {
       timestamp: 'Just Now ',
       user: props.calleduser,
       userEmail: props.calledemailId,
-    });
-    axios.get('/messages/sync').then(response => {
-      console.log(response.data);
-      setMessages(response.data);
     });
     setMessageText('');
   };
@@ -61,6 +56,7 @@ const ChatScreen = ({navigation}) => {
 
   const onEvent = event => {
     setMessages([...messages, JSON.parse(event.data)]);
+    console.log("messages",messages)
   };
 
   useEffect(() => {
@@ -77,6 +73,7 @@ const ChatScreen = ({navigation}) => {
     });
   }, []);
 
+  console.log("messages",messages)
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : ''}
@@ -190,7 +187,6 @@ const styles = StyleSheet.create({
     maxWidth: 300,
     height: 50,
     marginVertical: 5,
-    backgroundColor: '#efefef',
     borderRadius: 15,
     padding: 5,
   },
