@@ -6,15 +6,58 @@ import {TextInput} from 'react-native-gesture-handler';
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import {
+  Pusher
+} from '@pusher/pusher-websocket-react-native';
+import axios from '../api/axios';
 
 
-
-const ChatScreen = ({navigation,route}) => {
+const ChatScreen = ({navigation}) => {
     const[messageText,setMessageText]=useState("");
-    const {messages}=route.params;
+
     const scrollRef = useRef()
   const {props, setProps} = useContext(AppContext);
-  
+  const [messages, setMessages] = useState([]);
+  const pusher = Pusher.getInstance();
+
+const ChatPush = ()=>{
+    //create pusher connector
+    try {
+      pusher.init({
+        apiKey: "436e4833f50eb1ea41c2",
+        cluster: "ap2",
+        onEvent,
+      });
+      pusher.connect();
+      pusher.subscribe({
+        channelName: 'messages',
+      });
+    } catch (error) {}
+  };
+
+  const onEvent = (event) => {
+    console.log(`onEvent: ${event}`);
+    console.log("messages",messages);
+    setMessages([...messages,JSON.parse(event.data)])
+  };
+
+ 
+
+  useEffect(() => {
+    ChatPush();
+    return () => {
+      pusher.unsubscribe({channelName: 'messages'});
+    };
+  }, [messages]);
+ 
+  useEffect(()=>{
+    axios.get('/messages/sync')
+    .then(response=>{
+     console.log(response.data)
+     setMessages(response.data)
+    })
+},[])
+
 
   return (
     <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' : ''} style={styles.container}>
