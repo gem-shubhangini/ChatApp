@@ -90,7 +90,7 @@ const ChatScreen = ({navigation}) => {
                   item.userEmail === props.calledemailId
                 ) {
                   return (
-                    <View key={index}>
+                    <View key={index} style={{flexDirection:"row-reverse"}}>
                      
                       <View style={{...styles.chatRecievd,backgroundColor:"blue"}}>
                         <Text style={{color:"white"}}>{item.message}</Text>
