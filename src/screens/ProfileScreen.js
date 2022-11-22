@@ -24,7 +24,10 @@ const ProfileScreen = ({navigation}) => {
         </View>
       </View>
       <View style={styles.opreation}>
-        <TouchableOpacity style={styles.icon}>
+        <TouchableOpacity style={styles.icon} onPress={()=>{
+            setProps({...props,status:'connecting'})
+          navigation.navigate('Call')
+          }}>
           <Ionicons name="call" size={30} color="white"></Ionicons>
         </TouchableOpacity>
         <TouchableOpacity

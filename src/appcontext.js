@@ -5,6 +5,7 @@ export const initialState = {
   emailId: '',
   calleduser: 'hello',
   calledemailId: '',
+  status:''
 };
 
 const AppContext = React.createContext(initialState);
