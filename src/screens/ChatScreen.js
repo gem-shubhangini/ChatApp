@@ -20,6 +20,24 @@ const ChatScreen = ({navigation}) => {
   const [messages, setMessages] = useState([]);
   const pusher = Pusher.getInstance();
 
+   const sendMessage =async()=>{
+          console.log("its working")
+         
+          await axios.post("/messages/new",{
+            message:messageText,
+            name:props.user,
+            email:props.emailId,
+            timestamp:"Just Now ",
+            user:props.calleduser,
+            userEmail:props.calledemailId
+           });
+           setMessageText("");
+   }
+
+
+
+
+
 const ChatPush = ()=>{
     //create pusher connector
     try {
@@ -36,9 +54,9 @@ const ChatPush = ()=>{
   };
 
   const onEvent = (event) => {
-    console.log(`onEvent: ${event}`);
-    console.log("messages",messages);
+
     setMessages([...messages,JSON.parse(event.data)])
+   
   };
 
  
@@ -48,13 +66,14 @@ const ChatPush = ()=>{
     return () => {
       pusher.unsubscribe({channelName: 'messages'});
     };
-  }, [messages]);
+  }, [chat]);
  
   useEffect(()=>{
     axios.get('/messages/sync')
     .then(response=>{
      console.log(response.data)
      setMessages(response.data)
+
     })
 },[])
 
@@ -67,13 +86,14 @@ const ChatPush = ()=>{
       <View style={styles.chatMessage}>
         <ScrollView  ref={scrollRef} onContentSizeChange={()=>scrollRef.current.scrollToEnd()}>
             {
-                messages.map((item,index)=><View  key={index}>
-                    <Text>{item.name}</Text>
-                    <View style={styles.chatRecievd}>
-                    <Text>{item.message}</Text>
-                    <Text>{item.timestamp}</Text>
-                    </View>
+                messages.map((item,index)=>
+                <View  key={index}>
+                <Text>{item.name}</Text>
+                <View style={styles.chatRecievd}>
+                <Text>{item.message}</Text>
+                <Text>{item.timestamp}</Text>
                 </View>
+            </View>
                 )
             }
         </ScrollView>
@@ -98,7 +118,7 @@ const ChatPush = ()=>{
               backgroundColor: messageText ? '#0b71eb' : '#373838',
             }}
             disabled={messageText?false:true}
-            onPress={()=>console.log("message : ",messageText)}
+            onPress={()=>sendMessage()}
             >
             <FontAwesome name={'send'} size={18} color="#efefef" style={styles.send} />
           </TouchableOpacity>
@@ -139,7 +159,7 @@ const styles = StyleSheet.create({
        backgroundColor:"#d3d3d3",
        marginRight:5,
        borderRadius:10,
-       padding:10
+       padding:10,
     },
     chatMessage:{
       flex:1

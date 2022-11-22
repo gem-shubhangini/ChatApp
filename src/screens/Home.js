@@ -8,12 +8,45 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
 import AppContext from '../appcontext';
+import axios from '../api/axios';
 
 const Home = ({navigation}) => {
   const {props, setProps} = useContext(AppContext);
+  const [users,setUsers]=useState([])
+    useEffect(()=>{
+      axios.get('/user/sync') 
+      .then(response=>{
+        console.log(response.data)
+        setUsers(response.data)
+       })
+    },[])
+     
+    const Loginuser =()=>{
+      let create =true;
+      users.map((item)=>{
+          if(item.name===props.user && item.email===props.emailId){
+              create=false;
+          }
+      })
+      if(create){
+          axios.post('/user/create',{
+             name:props.user,
+             email:props.emailId
+          })
+          axios.get('/user/sync') 
+          .then(response=>{
+            console.log(response.data)
+            setUsers(response.data)
+           })
+      }
+      navigation.navigate('Contacts',{
+        users:users
+      })
+    }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -42,7 +75,7 @@ const Home = ({navigation}) => {
             <View style={styles.secondConatainer}>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate('Contacts')}>
+                onPress={() => Loginuser()}>
                 <Text style={{color: 'white', fontSize: 15}}>Login</Text>
               </TouchableOpacity>
             </View>
