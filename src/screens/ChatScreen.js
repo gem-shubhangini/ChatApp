@@ -37,6 +37,10 @@ const ChatScreen = ({navigation}) => {
       user: props.calleduser,
       userEmail: props.calledemailId,
     });
+    axios.get('/messages/sync').then(response => {
+      console.log(response.data);
+      setMessages(response.data);
+    });
     setMessageText('');
   };
 
