@@ -14,11 +14,11 @@ const Videocall = ({navigation}) => {
          <View style={styles.container}>
             <View style={{...styles.callscreen,justifyContent:props.status==='connecting'?"center":""}}>
                {props.status==="connecting" && <View style={styles.text}>
-                   <Text style={{color:"white",fontSize:18}}>Connecting</Text>
+                   <Text style={{color:"white",fontSize:18}}>Connecting...</Text>
                 </View>}
             </View>
             <View style={styles.bottomMenu}>
-              <TouchableOpacity style={{...styles.button,backgroundColor:"red"}} onPress={()=>navigation.goBack()}>
+              <TouchableOpacity style={{...styles.button,backgroundColor:"red"}} onPress={()=>navigation.navigate("Incoming Call")}>
               <MaterialCommunityIcons name='phone-hangup' size={30} color="white" />
               </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={()=>setAudio(!audio)}>

@@ -17,6 +17,7 @@ import ChatScreen from './src/screens/ChatScreen';
 import ContactScreen from './src/screens/ContactScreen';
 import Home from './src/screens/Home';
 import ProfileScreen from './src/screens/ProfileScreen';
+import RecievingScreen from './src/screens/RecievingScreen';
 import Videocall from './src/screens/Videocall';
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
@@ -35,6 +36,7 @@ const App = () => {
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="Chat" component={ChatScreen}/>
           <Stack.Screen name="Call" component={Videocall}/>
+          <Stack.Screen name="Incoming Call" component={RecievingScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
     </AppContext.Provider>
